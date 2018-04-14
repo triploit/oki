@@ -14,6 +14,9 @@ public class LangO
 
 	public LangO(List<String> users, List<String> answers)
 	{
+		this.users.clear();
+		this.answers.clear();
+
 		this.users.addAll(users);
 		this.answers.addAll(answers);
 	}

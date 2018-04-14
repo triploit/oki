@@ -13,6 +13,18 @@ import java.util.Map;
 
 public class Language
 {
+	public static String makeItAble(String text, Message c)
+	{
+		text = Runtime.brain.replaceVariables(text, c);
+
+		text = text.replace("\\\\", "<*T2A4_TMP_TBS*>");
+		text = text.replace("\\\"", "<*T1A3_TMP_AFZ*>");
+		text = text.replace("<*br*>", "\n");
+		text = text.trim();
+
+		return text.trim();
+	}
+
 	public static List<Token> tokenize(String text, Message c)
 	{
 		List<Token> l = new ArrayList<Token>();
@@ -20,11 +32,7 @@ public class Language
 		String type = "";
 		String tmp = "";
 
-		text = Runtime.brain.replaceVariables(text, c);
-
-		text = text.replace("\\\\", "<*T2A4_TMP_TBS*>");
-		text = text.replace("\\\"", "<*T1A3_TMP_AFZ*>");
-		text = text.replace("\n", "");
+		text = makeItAble(text, c);
 
 		if (text.charAt(0) == '(')
 		{
@@ -33,7 +41,10 @@ public class Language
 				if (text.charAt(i) == '"')
 				{
 					if (type.equals(""))
+					{
+						tmp = "";
 						type = "str";
+					}
 					else if (type.equals("str"))
 					{
 						type = "";

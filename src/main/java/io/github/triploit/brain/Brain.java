@@ -33,6 +33,12 @@ public class Brain
 		outp = outp.trim();
 		outp = outp.toLowerCase();
 
+		outp = outp.replace(",", " ");
+		outp = outp.replace(";", " ");
+		outp = outp.replace(".", " ");
+		outp = outp.replace(":", " ");
+		outp = outp.replace("  ", " ");
+
 		outp = outp.replace("  ", " ");
 		outp = outp.replace(",,", ",");
 		outp = outp.replace(";;", ";");
@@ -63,12 +69,6 @@ public class Brain
 		outp = outp.replace(" oki", "");
 		outp = outp.replace("oki ", "");
 		outp = outp.replace("oki", "");
-
-		outp = outp.replace(",", "");
-		outp = outp.replace(";", "");
-		outp = outp.replace(".", "");
-		outp = outp.replace(":", "");
-		outp = outp.replace("  ", " ");
 
 		outp = replaceFromNotifier(outp);
 		outp = outp.trim();
@@ -118,7 +118,7 @@ public class Brain
 							if (toks == null)
 								return ("Fehler im Skript!\n" +
 										"\n```\n" +
-										a +
+										Language.makeItAble(a, c) +
 										"\n```");
 
 							List<LangO> tmp = Language.parse(toks);
@@ -126,22 +126,22 @@ public class Brain
 							if (tmp == null)
 								return ("Fehler im Skript!\n" +
 										"\n```\n" +
-										a +
+										Language.makeItAble(a, c) +
 										"\n```");
 
 							boolean found = false;
+							boolean other = false;
 
 							for (LangO l : tmp)
 							{
 								for (String u : l.getUsers())
 								{
-									if (u.contains("<other>"))
-										return ("Fehler im Skript!\n" +
-												"\n```\n" +
-												a +
-												"\n```\n" +
-												"Kein \"<other>\" gefunden!");
+									if (u.equals("<other>"))
+										other = true;
+								}
 
+								for (String u : l.getUsers())
+								{
 									if (u.equals(c.getAuthor().getName()))
 									{
 										found = true;
@@ -155,8 +155,15 @@ public class Brain
 									}
 								}
 
-								if (found) break;
+								if (found && other) break;
 							}
+
+							if (!other)
+								return ("Fehler im Skript!\n" +
+									"\n```\n" +
+									Language.makeItAble(a, c) +
+									"\n```\n" +
+									"Kein \"<other>\" gefunden!");
 						}
 						else
 							ans.add(a);

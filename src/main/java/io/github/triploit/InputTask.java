@@ -32,6 +32,8 @@ public class InputTask extends Thread
 		if (Runtime.input && Runtime.inputAuthor.equals(author) && ID == Runtime.inputID)
 		{
 			message.getChannel().sendMessage("<@"+author+">, du hast zu lange gebraucht, um eine Nachricht einzugeben.").queue();
+			Runtime.input = false;
+			Runtime.inputSeconds = 0;
 		}
 
 		System.out.println("TimerTask ended.");
