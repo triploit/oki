@@ -150,7 +150,7 @@ public class MessageListener extends ListenerAdapter
 				channel.sendMessage(ans).queue();
 			else
 			{
-				channel.sendMessage(msg).queue();
+				channel.sendMessage(Runtime.brain.naked(msg)).queue();
 
 				Runtime.inputMessage = message;
 				Runtime.inputAuthor = author.getId();

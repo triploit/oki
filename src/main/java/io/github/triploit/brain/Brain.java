@@ -9,7 +9,9 @@ import net.dv8tion.jda.core.entities.Channel;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Brain
@@ -133,6 +135,13 @@ public class Brain
 							{
 								for (String u : l.getUsers())
 								{
+									if (u.contains("<other>"))
+										return ("Fehler im Skript!\n" +
+												"\n```\n" +
+												a +
+												"\n```\n" +
+												"Kein \"<other>\" gefunden!");
+
 									if (u.equals(c.getAuthor().getName()))
 									{
 										found = true;
@@ -161,8 +170,6 @@ public class Brain
 				}
 
 				String d = replaceVariables(ans.get((int) (Math.random() * ans.size())), c);
-
-
 				return d;
 			}
 		}
@@ -172,7 +179,10 @@ public class Brain
 
 	public String replaceVariables(String s, Message c)
 	{
-		s = s.replace("$time", "<NICHT EINGEFÜGT>");
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+		s = s.replace("$time", sdf.format(cal.getTime()));
 		s = s.replace("$master", c.getChannel().getJDA().getUserById(Runtime.config.master_identity).getName());
 		s = s.replace("$sender", c.getAuthor().getName());
 		s = s.replace("$user", c.getAuthor().getName());
