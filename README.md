@@ -155,7 +155,7 @@ Einfach die entschprechenden Zeilen löschen. Sind es jedoch mehrere Antworten, 
 ```
 User: Oki würfeln
 OKI: würfeln
-User: Eins~Zwei~Drei~Vier~Fünf~Sex
+User: Eins~Zwei~Drei~Vier~Fünf~Sechs
 ```
 
 wird das so abgespeichert:
@@ -167,7 +167,7 @@ A:Zwei
 A:Drei
 A:Vier
 A:Fünf
-A:Sex
+A:Sechs
 ```
 
 Die entsprechende Zeile kann dann einfach abgeändert oder gelöscht werden.
